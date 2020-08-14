@@ -14,7 +14,7 @@ import (
 func DeprecatedClientCommand(options ...client.Option) *cobra.Command {
 	cfg := client.NewConfig(options...)
 	cmd := &cobra.Command{
-		Use:        "deprecated",
+		Use:        cfg.CommandNamer("Deprecated"),
 		Short:      "Deprecated service client",
 		Long:       "",
 		Deprecated: "deprecated",
@@ -30,7 +30,7 @@ func _DeprecatedObsoleteCommand(cfg *client.Config) *cobra.Command {
 	req := &ObsoleteRequest{}
 
 	cmd := &cobra.Command{
-		Use:        "obsolete",
+		Use:        cfg.CommandNamer("Obsolete"),
 		Short:      "Obsolete RPC client",
 		Long:       "",
 		Deprecated: "deprecated",
@@ -39,7 +39,7 @@ func _DeprecatedObsoleteCommand(cfg *client.Config) *cobra.Command {
 				if err := flag.SetFlagsFromEnv(cmd.Parent().PersistentFlags(), cfg.EnvVarPrefix); err != nil {
 					return err
 				}
-				if err := flag.SetFlagsFromEnv(cmd.PersistentFlags(), cfg.EnvVarPrefix, "DEPRECATED", "OBSOLETE"); err != nil {
+				if err := flag.SetFlagsFromEnv(cmd.PersistentFlags(), cfg.EnvVarPrefix, cfg.EnvVarNamer("Deprecated Obsolete")); err != nil {
 					return err
 				}
 			}
@@ -64,8 +64,8 @@ func _DeprecatedObsoleteCommand(cfg *client.Config) *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().StringVar(&req.Unused, "unused", "", "")
-	_ = cmd.PersistentFlags().MarkDeprecated("unused", "deprecated")
+	cmd.PersistentFlags().StringVar(&req.Unused, cfg.FlagNamer("Unused"), "", "")
+	_ = cmd.PersistentFlags().MarkDeprecated(cfg.FlagNamer("Unused"), "deprecated")
 
 	return cmd
 }

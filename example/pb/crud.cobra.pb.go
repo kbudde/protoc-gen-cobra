@@ -14,7 +14,7 @@ import (
 func CRUDClientCommand(options ...client.Option) *cobra.Command {
 	cfg := client.NewConfig(options...)
 	cmd := &cobra.Command{
-		Use:   "crud",
+		Use:   cfg.CommandNamer("CRUD"),
 		Short: "CRUD service client",
 		Long:  "",
 	}
@@ -32,7 +32,7 @@ func _CRUDCreateCommand(cfg *client.Config) *cobra.Command {
 	req := &CreateCRUD{}
 
 	cmd := &cobra.Command{
-		Use:   "create",
+		Use:   cfg.CommandNamer("Create"),
 		Short: "Create RPC client",
 		Long:  "",
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -40,7 +40,7 @@ func _CRUDCreateCommand(cfg *client.Config) *cobra.Command {
 				if err := flag.SetFlagsFromEnv(cmd.Parent().PersistentFlags(), cfg.EnvVarPrefix); err != nil {
 					return err
 				}
-				if err := flag.SetFlagsFromEnv(cmd.PersistentFlags(), cfg.EnvVarPrefix, "CRUD", "CREATE"); err != nil {
+				if err := flag.SetFlagsFromEnv(cmd.PersistentFlags(), cfg.EnvVarPrefix, cfg.EnvVarNamer("CRUD Create")); err != nil {
 					return err
 				}
 			}
@@ -65,8 +65,8 @@ func _CRUDCreateCommand(cfg *client.Config) *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().StringVar(&req.Name, "name", "", "")
-	cmd.PersistentFlags().StringVar(&req.Value, "value", "", "")
+	cmd.PersistentFlags().StringVar(&req.Name, cfg.FlagNamer("Name"), "", "")
+	cmd.PersistentFlags().StringVar(&req.Value, cfg.FlagNamer("Value"), "", "")
 
 	return cmd
 }
@@ -75,7 +75,7 @@ func _CRUDGetCommand(cfg *client.Config) *cobra.Command {
 	req := &GetCRUD{}
 
 	cmd := &cobra.Command{
-		Use:   "get",
+		Use:   cfg.CommandNamer("Get"),
 		Short: "Get RPC client",
 		Long:  "",
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -83,7 +83,7 @@ func _CRUDGetCommand(cfg *client.Config) *cobra.Command {
 				if err := flag.SetFlagsFromEnv(cmd.Parent().PersistentFlags(), cfg.EnvVarPrefix); err != nil {
 					return err
 				}
-				if err := flag.SetFlagsFromEnv(cmd.PersistentFlags(), cfg.EnvVarPrefix, "CRUD", "GET"); err != nil {
+				if err := flag.SetFlagsFromEnv(cmd.PersistentFlags(), cfg.EnvVarPrefix, cfg.EnvVarNamer("CRUD Get")); err != nil {
 					return err
 				}
 			}
@@ -108,7 +108,7 @@ func _CRUDGetCommand(cfg *client.Config) *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().StringVar(&req.Name, "name", "", "")
+	cmd.PersistentFlags().StringVar(&req.Name, cfg.FlagNamer("Name"), "", "")
 
 	return cmd
 }
@@ -117,7 +117,7 @@ func _CRUDUpdateCommand(cfg *client.Config) *cobra.Command {
 	req := &CRUDObject{}
 
 	cmd := &cobra.Command{
-		Use:   "update",
+		Use:   cfg.CommandNamer("Update"),
 		Short: "Update RPC client",
 		Long:  "",
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -125,7 +125,7 @@ func _CRUDUpdateCommand(cfg *client.Config) *cobra.Command {
 				if err := flag.SetFlagsFromEnv(cmd.Parent().PersistentFlags(), cfg.EnvVarPrefix); err != nil {
 					return err
 				}
-				if err := flag.SetFlagsFromEnv(cmd.PersistentFlags(), cfg.EnvVarPrefix, "CRUD", "UPDATE"); err != nil {
+				if err := flag.SetFlagsFromEnv(cmd.PersistentFlags(), cfg.EnvVarPrefix, cfg.EnvVarNamer("CRUD Update")); err != nil {
 					return err
 				}
 			}
@@ -150,8 +150,8 @@ func _CRUDUpdateCommand(cfg *client.Config) *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().StringVar(&req.Name, "name", "", "")
-	cmd.PersistentFlags().StringVar(&req.Value, "value", "", "")
+	cmd.PersistentFlags().StringVar(&req.Name, cfg.FlagNamer("Name"), "", "")
+	cmd.PersistentFlags().StringVar(&req.Value, cfg.FlagNamer("Value"), "", "")
 
 	return cmd
 }
@@ -160,7 +160,7 @@ func _CRUDDeleteCommand(cfg *client.Config) *cobra.Command {
 	req := &CRUDObject{}
 
 	cmd := &cobra.Command{
-		Use:   "delete",
+		Use:   cfg.CommandNamer("Delete"),
 		Short: "Delete RPC client",
 		Long:  "",
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -168,7 +168,7 @@ func _CRUDDeleteCommand(cfg *client.Config) *cobra.Command {
 				if err := flag.SetFlagsFromEnv(cmd.Parent().PersistentFlags(), cfg.EnvVarPrefix); err != nil {
 					return err
 				}
-				if err := flag.SetFlagsFromEnv(cmd.PersistentFlags(), cfg.EnvVarPrefix, "CRUD", "DELETE"); err != nil {
+				if err := flag.SetFlagsFromEnv(cmd.PersistentFlags(), cfg.EnvVarPrefix, cfg.EnvVarNamer("CRUD Delete")); err != nil {
 					return err
 				}
 			}
@@ -193,8 +193,8 @@ func _CRUDDeleteCommand(cfg *client.Config) *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().StringVar(&req.Name, "name", "", "")
-	cmd.PersistentFlags().StringVar(&req.Value, "value", "", "")
+	cmd.PersistentFlags().StringVar(&req.Name, cfg.FlagNamer("Name"), "", "")
+	cmd.PersistentFlags().StringVar(&req.Value, cfg.FlagNamer("Value"), "", "")
 
 	return cmd
 }
